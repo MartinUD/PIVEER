@@ -5,7 +5,8 @@ import { HousingLocation } from './housing-location';
 })
 export class HousingService {
 
-  protected housingLocationList: HousingLocation[] = [{
+  protected housingLocationList: HousingLocation[] = [
+    {
     id: 0,
     name: 'Acme Fresh Start Housing',
     city: 'Chicago',
@@ -104,15 +105,16 @@ export class HousingService {
     availableUnits: 6,
     wifi: true,
     laundry: true
-  }];
+  }
+];
+ 
   constructor() { }
   
   getAllHousingLocation() : HousingLocation[] {
     return this.housingLocationList;
   }
 
-  getHousingLocationById(id: Number): HousingLocation |
-  undefined {
+  getHousingLocationById(id: number): HousingLocation | undefined {
     return this.housingLocationList.find(housingLocation => housingLocation.id === id);
   }
 }

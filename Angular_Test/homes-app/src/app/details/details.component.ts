@@ -11,18 +11,18 @@ import { HousingLocation } from '../housing-location';
   imports: [CommonModule],
   template: `
     <p>
-      details works! {{housingLocationId}}
+      details works! {{housingLocation?.id}}
     </p>
   `,
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
-  housingService = inject(HousingService)
+  housingService = inject(HousingService);
   housingLocation: HousingLocation | undefined;
+
   constructor() {
     const housingLocationId = Number(this.route.snapshot.params["id"]);
-    this.housingLocation = this.housingService;
-    getHousingLocationByID(housingLocationId);
+    this.housingLocation = this.housingService.getHousingLocationById(housingLocationId);
   }
 }
