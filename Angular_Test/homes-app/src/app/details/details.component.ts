@@ -10,9 +10,25 @@ import { HousingLocation } from '../housing-location';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <p>
-      details works! {{housingLocation?.id}}
-    </p>
+    <article>
+      <img class="listing-photo" [src]="housingLocation?.photo" alt="Picture o' a house">
+      <section class="listing-description">
+        <h2 class="listing-heading">{{housingLocation?.name}}</h2>
+        <p class="listing-location">{{housingLocation?.city}}, {{housingLocation?.state}}</p>
+      </section>
+      <section class="listing-features">
+        <h2 class="section-heading">About this location:</h2>
+        <ul>
+          <li>Units avaliable: {{housingLocation?.availableUnits}}</li>
+          <li>Does it have wifi?: {{housingLocation?.wifi}}</li>
+          <li>Does it have laundry: {{housingLocation?.laundry}}</li>
+        </ul>
+      </section>
+      <section class="listing-apply">
+        <h2 class="section-heading">Apply now to live here</h2>
+        <button class="primary" type="button">Apply</button>
+      </section>
+    </article>
   `,
   styleUrls: ['./details.component.css']
 })
