@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="300">
     <title>Document</title>
+    <link rel="stylesheet" href="">
 </head>
 <style>
     body{
@@ -18,5 +19,24 @@
 </style>
 <body>
     
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+
+            const myList = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+
+            function pickRandomNumber() {
+
+                const randomNumber = Math.floor(Math.random() * myList.length) + 1;
+                console.log(`Random Number: ${randomNumber}`);
+            }
+
+            pickRandomNumber();
+
+            // Then call pickRandomNumber every minute (60000 milliseconds)
+            setInterval(pickRandomNumber, 10000);
+        });
+
+    </script>
 </body>
 </html>
