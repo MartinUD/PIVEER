@@ -3,36 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="300">
     <title>Document</title>
     <script src="Scripts/imageChanger.js"></script>
     <script> 
-        <?php    
-        $files = scandir(__DIR__ . '/assets');
+        <?php
+        $currentDir = __DIR__;
+
+        $directoryPath = $currentDir . '/assets';
+    
+        $files = scandir($directoryPath);
 
         $files = array_diff($files, array('.', '..'));
 
-        $filesJSON = json_encode(array_values($files));
+        $filesArray = array_values($files);
+
+        $filesJSON = json_encode($filesArray);
         ?>
         mylist = [];
         myList = <?php echo $filesJSON; ?>;
         contentChange(myList);
-        console.log("<?php echo __DIR__ ?>")
     </script>
 </head>
-<style>
-    body{
-        width: 100vw;
-        height: 100vh;
-        background-size: contain;
-        overflow: hidden;
-        cursor: none;
-    }
-</style>
-
 <body>
-    
-
+    <h1>test</h1>
 </body>
 </html>
-

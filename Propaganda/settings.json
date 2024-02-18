@@ -1,5 +1,5 @@
 {
-  "interval": 1000, 
-  "randomBild": true,
-  "linearBild": false
+  "interval": 2000, 
+  "randomBild": false,
+  "linearBild": true
 }
