@@ -39,7 +39,7 @@
             var interval;
             var randomBild;
             var linearBild;
-            fetch('/PIVEER/Propaganda/fiskgratäng/settings.json')
+            fetch('/PIVEER/Propaganda/settings.json')
             .then(response => response.json())
             .then(data => {
                 interval = parseInt(data.interval);
