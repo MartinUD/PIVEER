@@ -1,8 +1,9 @@
-function contentChange(myList, Index) {
-    console.log("This is the contentChange function")
+function contentChange(myList) {
     var interval;
     var randomBild;
     var linearBild;
+    let Index = 0;
+
     fetch('/PIVEER/Propaganda/settings.json')
         .then(response => response.json())
         .then(data => {
@@ -10,10 +11,7 @@ function contentChange(myList, Index) {
             randomBild = data.randomBild;
             linearBild = data.linearBild;
 
-            console.log(interval, randomBild, linearBild)
-
             listLen = myList.length;
-            console.log(myList)
 
             function pickRandomNumber() {
                 const randomNumber = Math.floor(Math.random() * myList.length);
@@ -23,26 +21,26 @@ function contentChange(myList, Index) {
 
             function pickLinearNumber() {
                 if (Index >= listLen) {
+                    console.log("Reset the index")
                     Index = 0;
-                }
+                }           
                 changeCurrentItem(myList[Index]);
-                document.body.style.backgroundImage = `url('${'assets/' + myList[Index]}')`;
                 Index += 1;
                 setTimeout(pickLinearNumber, interval);
-                
-            }
+                }   
 
-            function changeCurrentItem(currentItem) {
-                function getFileName(fname) {
-                    return fname.slice((fname.lastIndexOf(".") - 1 >>> 0) + 2);
-                }
-                if (getFileName(currentItem) === "") {
-                    console.log("This is a dirctory")
-                    window.location.href = `assets/${currentItem}/index.php`;
-                } else {
-                    console.log("This is a file")
-                    document.body.style.backgroundImage = `url('${'assets/' + myList[Index]}')`;
-                }
+                function changeCurrentItem(currentItem) {
+                    function getFileName(fname) {
+                        console.log("fname", fname)
+                        return fname.slice((fname.lastIndexOf(".") - 1 >>> 0) + 2);
+                    }
+                    if (getFileName(currentItem) === "") { // If the file is a HTML directory
+                        fetchAndReplace('assets/' + currentItem)
+
+                    } else {
+                        document.body.innerHTML = "";
+                        document.body.style.backgroundImage = `url('${'assets/' + myList[Index]}')`;
+                    }
 
             }
             if (randomBild) {
@@ -50,6 +48,23 @@ function contentChange(myList, Index) {
                 setInterval(pickRandomNumber, interval);
             } else {
                 pickLinearNumber();
+            }
+            
+            function fetchAndReplace(filepath) {
+                fetch(filepath) 
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const newDocument = parser.parseFromString(html, 'text/html');
+                        
+                        // Replace head content
+                        document.body.style = ""
+                        //document.head.innerHTML = newDocument.head.innerHTML;
+                        
+                        // Replace body content
+                        document.body.innerHTML = newDocument.body.innerHTML;
+                    })
+                    .catch(error => console.error('Error fetching and replacing HTML:', error));
             }
         });
 }

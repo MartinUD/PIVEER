@@ -17,7 +17,6 @@
         mylist = [];
         myList = <?php echo $filesJSON; ?>;
         contentChange(myList);
-        console.log("<?php echo __DIR__ ?>")
     </script>
 </head>
 <style>
