@@ -1,8 +1,11 @@
 function contentChange(myList) {
-    var interval;
-    var randomBild;
-    var linearBild;
+    let interval;
+    let randomBild;
+    let linearBild;
     let Index = 0;
+
+
+
 
     fetch('/PIVEER/Propaganda/settings.json')
         .then(response => response.json())
@@ -38,8 +41,10 @@ function contentChange(myList) {
                         fetchAndReplace('assets/' + currentItem)
 
                     } else {
-                        document.body.innerHTML = "";
+                        document.body.style = "";
+                        document.body.innerHTML = "";  
                         document.body.style.backgroundImage = `url('${'assets/' + myList[Index]}')`;
+                        
                     }
 
             }
@@ -57,9 +62,8 @@ function contentChange(myList) {
                         const parser = new DOMParser();
                         const newDocument = parser.parseFromString(html, 'text/html');
                         
-                        // Replace head content
+                        // Replace style contents
                         document.body.style = ""
-                        //document.head.innerHTML = newDocument.head.innerHTML;
                         
                         // Replace body content
                         document.body.innerHTML = newDocument.body.innerHTML;
