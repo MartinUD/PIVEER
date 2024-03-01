@@ -41,13 +41,7 @@ function contentChange(myList) {
                          fetchingFunctions('assets/' + currentItem)
 
                     } else {
-                        document.body.style = "";
-                        if (document.getElementById("TempCSS") || document.getElementById("TempJS") != null){
-                            document.getElementById("TempCSS").remove();
-                            document.getElementById("TempJS").remove();
-                        }  
-                        
-                        document.body.innerHTML = "";  
+                        removeTemp();
                         document.body.style.backgroundImage = `url('${'assets/' + myList[Index]}')`;
                         
                     }
@@ -59,8 +53,18 @@ function contentChange(myList) {
             } else {
                 pickLinearNumber();
             }
-            
+            function removeTemp(){
+                document.body.style = "";
+                document.body.innerHTML = ""; 
+                if (document.getElementById("TempCSS") || document.getElementById("TempJS") != null){
+                    document.getElementById("TempCSS").remove();
+                    document.getElementById("TempJS").remove();
+                }
+            }
+
+
             function fetchingFunctions(filepath){
+                removeTemp();
                 fetchHTML(filepath);
                 fetchCSS(filepath + '/style.css');
                 fetchJS(filepath + '/script.js');
