@@ -38,10 +38,15 @@ function contentChange(myList) {
                         return fname.slice((fname.lastIndexOf(".") - 1 >>> 0) + 2);
                     }
                     if (getFileName(currentItem) === "") { // If the file is a HTML directory
-                        fetchAndReplace('assets/' + currentItem)
+                         fetchingFunctions('assets/' + currentItem)
 
                     } else {
                         document.body.style = "";
+                        if (document.getElementById("TempCSS") || document.getElementById("TempJS") != null){
+                            document.getElementById("TempCSS").remove();
+                            document.getElementById("TempJS").remove();
+                        }  
+                        
                         document.body.innerHTML = "";  
                         document.body.style.backgroundImage = `url('${'assets/' + myList[Index]}')`;
                         
@@ -55,7 +60,13 @@ function contentChange(myList) {
                 pickLinearNumber();
             }
             
-            function fetchAndReplace(filepath) {
+            function fetchingFunctions(filepath){
+                fetchHTML(filepath);
+                fetchCSS(filepath + '/style.css');
+                fetchJS(filepath + '/script.js');
+            }
+
+            function fetchHTML(filepath) {
                 fetch(filepath) 
                     .then(response => response.text())
                     .then(html => {
@@ -70,5 +81,20 @@ function contentChange(myList) {
                     })
                     .catch(error => console.error('Error fetching and replacing HTML:', error));
             }
-        });
+            function fetchCSS(filepath) {
+                const css = document.createElement('link');
+                css.type = 'text/css';
+                css.rel = 'stylesheet';
+                css.href = filepath;
+                css.id = "TempCSS";
+                document.head.appendChild(css);
+            }
+            function fetchJS(filepath) {
+                const script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = filepath;
+                script.id = "TempJS"
+                document.head.appendChild(script);
+              }        
+        });  
 }
