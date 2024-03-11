@@ -1,0 +1,100 @@
+@media (orientation: portrait) {
+    *{
+        margin: 0;
+    }
+    
+    .formulär{
+        color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    label{
+        font-size: 3rem;
+        margin: -2rem;
+        text-align: center;
+        line-height: 3rem;
+        width: 100%;
+    }
+    
+    .textOchBeskrivning{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 3rem;
+        padding-top: 4rem;
+        padding-bottom: 0;
+    }
+    
+    p{
+        font-size: 1.3rem;
+        margin: 2rem;
+        color: rgb(189, 189, 189);
+        width: 100%;
+    }
+    
+    textarea{
+        padding: 0.5rem;
+        font-size: 1rem;
+        margin: 2rem;
+        margin-top: 0;
+        border-radius: 0.5rem;
+        border: none;
+        width: 60%;
+        background-color: rgb(137, 148, 161);
+    }
+    
+    input{
+        padding: 0.5rem;
+        font-size: 3rem;
+        margin: 2rem;
+        border-radius: 0.5rem;
+        width: 70%;
+        border: none;
+        background-color: rgb(137, 148, 161);
+        margin-top: 0;
+    }
+    
+    body, html{
+        width: 100vw;
+        height: 300vh;
+        background-color: rgb(16, 16, 16);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        scroll-snap-type: y mandatory;
+        
+    }
+    
+    section{
+        scroll-snap-align: start;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    section:nth-child(even){
+        background-color: rgb(25, 25, 25);
+    }
+    
+    article{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        background-color: rgba(0,0,0,0.50);
+    
+    }
+    
+    #submit{
+        width: 30rem;
+        height: 10rem;
+    }
+}
