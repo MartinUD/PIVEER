@@ -1,8 +1,11 @@
 function contentChange(myList) {
-    var interval;
-    var randomBild;
-    var linearBild;
+    let interval;
+    let randomBild;
+    let linearBild;
     let Index = 0;
+
+
+
 
     fetch('/PIVEER/Propaganda/settings.json')
         .then(response => response.json())
@@ -35,11 +38,12 @@ function contentChange(myList) {
                         return fname.slice((fname.lastIndexOf(".") - 1 >>> 0) + 2);
                     }
                     if (getFileName(currentItem) === "") { // If the file is a HTML directory
-                        fetchAndReplace('assets/' + currentItem)
+                         fetchingFunctions('assets/' + currentItem)
 
                     } else {
-                        document.body.innerHTML = "";
+                        removeTemp();
                         document.body.style.backgroundImage = `url('${'assets/' + myList[Index]}')`;
+                        
                     }
 
             }
@@ -49,22 +53,52 @@ function contentChange(myList) {
             } else {
                 pickLinearNumber();
             }
-            
-            function fetchAndReplace(filepath) {
+            function removeTemp(){
+                document.body.style = "";
+                document.body.innerHTML = ""; 
+                if (document.getElementById("TempCSS") || document.getElementById("TempJS") != null){
+                    document.getElementById("TempCSS").remove();
+                    document.getElementById("TempJS").remove();
+                }
+            }
+
+
+            function fetchingFunctions(filepath){
+                removeTemp();
+                fetchHTML(filepath);
+                fetchCSS(filepath + '/style.css');
+                fetchJS(filepath + '/script.js');
+            }
+
+            function fetchHTML(filepath) {
                 fetch(filepath) 
                     .then(response => response.text())
                     .then(html => {
                         const parser = new DOMParser();
                         const newDocument = parser.parseFromString(html, 'text/html');
                         
-                        // Replace head content
+                        // Replace style contents
                         document.body.style = ""
-                        //document.head.innerHTML = newDocument.head.innerHTML;
                         
                         // Replace body content
                         document.body.innerHTML = newDocument.body.innerHTML;
                     })
                     .catch(error => console.error('Error fetching and replacing HTML:', error));
             }
-        });
+            function fetchCSS(filepath) {
+                const css = document.createElement('link');
+                css.type = 'text/css';
+                css.rel = 'stylesheet';
+                css.href = filepath;
+                css.id = "TempCSS";
+                document.head.appendChild(css);
+            }
+            function fetchJS(filepath) {
+                const script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = filepath;
+                script.id = "TempJS"
+                document.head.appendChild(script);
+              }        
+        });  
 }
