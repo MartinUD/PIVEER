@@ -1,14 +1,25 @@
-// Assuming htmlStyle and bodyStyle are objects that contain CSS styles
+// Get references to the <html> and <body> elements' styles
 var htmlStyle = document.documentElement.style;
 var bodyStyle = document.body.style;
 
-// Assuming you have a way to detect keyboard show/hide
-window.addEventListener('keyboardWillShow', function () {
+// Function to disable scroll snap
+function disableScrollSnap() {
     htmlStyle.scrollSnapType = "none";
     bodyStyle.scrollSnapType = "none";
-});
+}
 
-window.addEventListener('keyboardWillHide', function () {
+// Function to enable scroll snap
+function enableScrollSnap() {
     htmlStyle.scrollSnapType = "y mandatory";
     bodyStyle.scrollSnapType = "y mandatory";
+}
+
+// Attach focus event listeners to all input elements
+document.querySelectorAll('input').forEach(function(input) {
+    input.addEventListener('focus', disableScrollSnap);
+});
+
+// Attach blur event listeners to all input elements
+document.querySelectorAll('input').forEach(function(input) {
+    input.addEventListener('blur', enableScrollSnap);
 });
