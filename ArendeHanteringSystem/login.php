@@ -29,12 +29,21 @@ if(isset($_POST['username']) && isset($_POST['password'])){
         $row = mysqli_fetch_assoc($result);
         if($row['user_name'] === $username && $row['password'] === $password){
             $_SESSION['username'] = $row['user_name'];
-            $_SESSION['name'] = $row['name'];
             $_SESSION['role'] = $row['role'];
             $_SESSION['full_name'] = $row['full_name'];
             $_SESSION['id'] = $row['id'];
-            header("Location: home.php");
-            exit();
+            if($_SESSION['role'] === 'admin'){
+                header("Location: admin.php");
+                exit();
+            }
+            elseif($_SESSION['role'] === 'user'){
+                header("Location: home.php");
+                exit();
+            }
+            elseif($_SESSION['role'] === 'support'){
+                header("Location: support.php");
+                exit();
+            }
         }
         else{
             header("Location: index.php?error=Incorect User name or password");
@@ -50,4 +59,3 @@ else{
     header("Location: index.php");
     exit();
 }
-
