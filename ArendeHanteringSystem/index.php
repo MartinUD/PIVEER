@@ -16,7 +16,8 @@
         <div style="color:white;">
         <i class="fa-solid fa-key" style="position:absolute; transform: translate(1.2rem, 1.2rem); opacity:0.6; scale:0.75;"></i>
             <input type="password" name="password" placeholder="Lösenord" style="color:white; border-radius: 3rem; text-indent: 2.5rem; outline: none; font-size: 1rem; background-color:transparent; border-width: 2px; border-style:solid; border-color:#334155; width: 25rem; height: 3rem;">
-        </div>        <div style="margin-top:1rem;">
+        </div>        
+        <div style="margin-top:1rem;">
             <button style="color:white; width: 10rem; height: 3rem; outline: none; cursor:pointer; font-size: 1rem; border-radius: 3rem; background-color:transparent; border-width: 2px; border-style:solid; border-color:#334155;" type="submit">Logga in</button>
             <a style="color:white; text-decoration:none; width: 10rem; padding:0.75rem; outline: none; font-size: 1rem; border-radius: 3rem; background-color:transparent; border-width: 2px; border-style:solid; border-color:#334155;" href="jagglom.html">Glömt lösenordet</a>
         </div>

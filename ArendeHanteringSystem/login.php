@@ -41,7 +41,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
                 exit();
             }
             elseif($_SESSION['role'] === 'support'){
-                header("Location: support.php");
+                header("Location: homeSupport.php");
                 exit();
             }
         }

@@ -65,10 +65,9 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
         }
         .ticketTitleAndIss{
             width: 100%;
-            height: 20%;
             display: flex;
             flex-direction: row;
-            align-items: end;
+            align-items: start;
         }
         .ticketTitleAndIss > *{
             margin-right: 0.5rem;
@@ -170,7 +169,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
 
                             if($result){
                                 while($row = $result->fetch_assoc()){
-                                    if($_SESSION['full_name'] === $row['issuer'] or $_SESSION['full_name'] === $row['assinged_to']){
+                                    if($_SESSION['role'] === $row['required_role'] && $_SESSION['full_name'] === $row['assinged_to']){
                                         $title = $row['title'];
                                         $issue_conversation = ($row['issue_conversation']);
                                         $required_role = $row['required_role'];
