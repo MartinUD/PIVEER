@@ -105,7 +105,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
             max-width: 100%;
         }
         .sendButton{
-            margin-bottom: 10rem;
+            margin-bottom: 1rem;
             cursor:pointer;
         }
     </style>
@@ -140,6 +140,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
                         
                     
                     if ($result) {
+                        // Fetch the data from the database
                         while($row = mysqli_fetch_assoc($result)) {
                             $data = json_decode($row['issue_conversation'], true);
                             $issue_conversation = $row['issue_conversation'];
@@ -150,11 +151,9 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
                             echo "<h1 class='ticketStyle'>" . 'Datum: ' . $row['date'] . "</h1>";
                             echo "<h1 class='ticketStyle'>" . 'Ifrån: ' . $row['issuer'] . "</h1>";
                             echo "<h1 class='ticketStyle'>" . 'Till: ' . $row['assinged_to'] . "</h1>";
-                            echo "<h1 class='ticketStyle'>" . 'Roll som krävs: ' . $row['required_role'] . "</h1>";
                             echo "<br>";
                             echo "<br>";
                             foreach ($data['conversation'] as $message) {
-                                // Create a paragraph with the message details
                                 echo "
                                         <div class='message'>
                                             <p class='ticketStyle ticketDescription'>" . htmlspecialchars($message['text']) . "</p>
@@ -169,7 +168,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
                                     <textarea class="messageBox" name="meddelande" value="meddelande"></textarea> 
                                     <input type="submit" name="Skicka" class="ticketStyle sendButton" value="Skicka" /> 
                             </form>';
-                            
+                            // send new message
                             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 if (isset($_POST['meddelande']) && !empty($_POST['meddelande'])) {
                                     echo "<br>";
@@ -181,7 +180,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
                                     $newNumber = 'msg' . $numberPart + 1;
                                         
                                     $date = date('Y-m-d', time());
-                                    $user = $_SESSION['username'];
+                                    $user = $_SESSION['full_name'];
                                     $newMessage = array(
                                         "text" => "{$_POST['meddelande']}",
                                         "timestamp" => "{$date}",
@@ -191,17 +190,14 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
                                     $data['conversation']["{$newNumber}"] = $newMessage;
                                     echo "<br>";
                                     echo "<br>";
-                                    $encodedData = json_encode($data, JSON_PRETTY_PRINT);
+                                    $encodedData = json_encode($data, JSON_UNESCAPED_UNICODE);
                                     $id = $row['id'];
 
 
                                     $sql = "UPDATE issues SET issue_conversation='$encodedData' WHERE id = $id";
-                                    if (mysqli_query($conn, $sql)) {
-                                    echo "Record updated successfully";
-                                        } 
-                                    else {
-                                    echo "Error updating record: " . mysqli_error($conn);
-                                    }
+                                    mysqli_query($conn, $sql);
+                                    echo "<script>location.href='medelandeSkickat.php?id=$id'</script>";
+                                    
                                 } else {
                                     echo "Meddelande is empty";
                                 }

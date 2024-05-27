@@ -112,13 +112,9 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
     <body style="width: 100wh; height:100vh; overflow:hidden; margin: 0; background-color: #1e293b; color:white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
         <div style="display:flex; flex-direction: row;">
             <aside style="width: 13rem; display:flex; flex-direction: column; height: 100vh; background-color: #243248; display: flex;">
-                <a class="navrow" href="home.php">
-                    <i class="fa-solid fa-clipboard-list navRowIcon"></i>
-                    <h1 class="navRowText">Ärenden</h1>
-                </a>
-                <a class="navrow">
+                <a class="navrow" href="admin.php">
                     <i class="fa-solid fa-plus navRowIcon"></i>
-                    <h1 class="navRowText">Skapa Ärende</h1>
+                    <h1 class="navRowText">Skapa Användare</h1>
                 </a>
                 <a href="logout.php" style="margin-top:auto; border-top: 2px solid #2A3A54;" class="navrow"> 
                     <i class="fa-solid fa-right-from-bracket navRowIcon"></i>
@@ -128,50 +124,34 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
             </aside>
             <div class="issues_dashboard" style="width: 100%; height: 100vh; padding-left:2rem; padding-right: 5rem; overflow-y: scroll;">
                 <br>
-                <h1>Skapa Ärende</h1>
-                <br>
+                <h1>Skapa Användare</h1>
+                <form action="admin.php" method="post">
+                    <input type="text" name="username" placeholder="Användarnamn" class="ticketStyle">
+                    <input type="text" name="password" placeholder="Lösenord" class="ticketStyle">
+                    <input type="text" name="full_name" placeholder="Namn och Efternamn" class="ticketStyle">
+                    <select name="role" placeholder="role" class="ticketStyle">Skapa
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="support">Support</option>
+                    </select>
+                    <button type="submit" class="ticketStyle">Skapa</button>
+                </form>
                 <?php
-                
-                
-                if(isset($_POST['description'])){
-                    $title = $_POST['title'];
-                    $userId = $_SESSION['id'];
-                    $date = date('Y-m-d', time());
-                    $user = $_SESSION['full_name'];
-                    $support = $_POST['support'];
-                    $newIssue = array(
-                        "conversation" => array(
-                            "msg1" => array(
-                                "text" => "{$_POST['description']}",
-                                "timestamp" => "{$date}",
-                                "user" => "{$user}"
-                            )
-                        )
-                    );
-                    $encodedNewIssue = json_encode($newIssue, JSON_UNESCAPED_UNICODE);
-                    $sql = "INSERT INTO issues (title, required_role, date, issuer, assinged_to, issue_conversation) VALUES ('$title', 'support', '$date', '$user', '$support', '$encodedNewIssue')";     
-                    mysqli_query($conn, $sql);               
+                if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role'])){
+                    $username = $_POST['username'];
+                    $password = $_POST['password'];
+                    $full_name = $_POST['full_name'];
+                    $role = $_POST['role'];
+                    $sql = "INSERT INTO users (user_name, password, role, full_name) VALUES ('$username', '$password', '$role', '$full_name')";
+                    $result = mysqli_query($conn, $sql);
+                    if($result){
+                        echo "<p class='message'>Användare skapad</p>";
+                    }
+                    else{
+                        echo "<p class='message'>Användare kunde inte skapas</p>";
+                    }
                 }
                 ?>
-                <form action="createIssue.php" style="display:flex; flex-direction: column;" method="post">
-                    <?php
-                    $sql = "SELECT full_name FROM users WHERE role='support'";
-                    $result = mysqli_query($conn, $sql);
-                    echo "<label for='support' style='margin-bottom: 0.5rem;'>Support</label>" . "<br>";
-                    if(mysqli_num_rows($result) > 0){
-                        echo "<select name='support' class='ticketStyle' style='width: 30%; margin-bottom: 0.5rem; outline: none;'>";
-                        while($row = mysqli_fetch_assoc($result)){
-                            echo "<option value='{$row['full_name']}'>{$row['full_name']}</option>";
-                        }
-                        echo "</select>";
-                    }
-                    ?>
-                    <label for="title" style="margin-bottom: 0.5rem;">Titel</label>
-                    <input type="text" name="title" class="ticketStyle" style="width: 30%; margin-bottom: 0.5rem; outline: none;" required>
-                    <label for="description">Beskrivning</label>
-                    <textarea name="description" class="ticketDescription" style="width: 100%;" required></textarea>
-                    <button type="submit" class="ticketStyle sendButton" style="width: 100%;">Skapa</button>
-                </form>
             </div>
         </div>
 </body>

@@ -43,8 +43,9 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
             flex-direction: column;
             padding-top: 2rem;
             padding-right: 5rem;
+            margin-bottom: 1rem;
             width: 100%;
-            height: 27rem;
+            height: 75vh;
             overflow-y: scroll;
             overflow-x: hidden;
         }
@@ -52,7 +53,6 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
             margin-bottom: 2rem;
             padding-right: 2rem;
             width: 100%;
-            height: 100%;
         }
         .ticketStyle{
             background-color: transparent;
@@ -130,7 +130,6 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
         }
         .bottomButtons{
             margin-top: auto;
-            margin-bottom: 2rem;
         }
         .bottomButton{
             cursor: pointer;
@@ -162,9 +161,10 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
                 </a>
             </aside>
             <div class="issues_dashboard" style="width: 100%; padding-left:2rem; padding-right: 5rem;">
-                <h1 style="margin-top: 2rem; margin-bottom: 1rem;">Hej, <?php echo $_SESSION['username']; ?></h1>
+                <h1 style="margin-top: 2rem; margin-bottom: 1rem;">Hej, <?php echo $_SESSION['full_name']; ?></h1>
                 <div class="tickerHolder">
                     <?php
+                            // Fetch all tickets from the database
                             $sql = "SELECT id, title, issue_conversation, date, issuer, assinged_to, required_role FROM issues";
                             $result = mysqli_query($conn, $sql);
 
@@ -187,7 +187,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
                                         <div class='ticket'>
                                             <div class='ticketTitleAndIss'>
                                                 <h1 id='title' class='ticketStyle'>Title: {$title}</h1>
-                                                <h1 id='issue' class='ticketStyle'>Från: {$issuer}</h1>
+                                                <h1 id='issue' class='ticketStyle'>Till: {$assinged_to}</h1>
                                                 <h1 id='id' class='ticketStyle'>Id: {$ticket_id}</h1>
                                             </div>
                                             <div class='ticketDescription'>
@@ -219,28 +219,24 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
 </body>
 </html>
 <script>
+    // Function to add a close menu
     function addCloseMenu(ticketId, title) {
     
-    // Create a div element for the close menu
     const closeMenu = document.createElement('div');
     closeMenu.className = 'closeMenu';
     closeMenu.id = 'closeMenu';
 
-    // Create a nested div element for the close menu foreground
     const closeMenuFG = document.createElement('div');
     closeMenuFG.className = 'closeMenuFG';
 
-    // Create an h1 element with the specified styles and text
     const heading = document.createElement('h1');
     heading.style.textAlign = 'center';
     heading.style.paddingTop = '3rem';
     heading.textContent = 'Är du säker på att du vill avsluta detta ärende?';
 
-    // Create the info div
     const closeMenuInfo = document.createElement('div');
     closeMenuInfo.className = 'closeMenuInfo';
 
-    // Create the ticket ID and title elements
     const ticketIdElement = document.createElement('h1');
     ticketIdElement.className = 'ticketStyle';
     ticketIdElement.textContent = `Ärende ID: ${ticketId}`;
@@ -249,37 +245,32 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
     titleElement.className = 'ticketStyle';
     titleElement.textContent = `Titel: ${title}`;
 
-    // Append the ticket ID and title to the info div
     closeMenuInfo.appendChild(ticketIdElement);
     closeMenuInfo.appendChild(titleElement);
 
-    // Create the bottom buttons div
     const bottomButtons = document.createElement('div');
     bottomButtons.className = 'bottomButtons';
 
-    // Create the "Ja" button
     const yesButton = document.createElement('button');
     yesButton.className = 'ticketStyle bottomButton';
     yesButton.textContent = 'Ja';
 
-    // Add click event to post to deleteIssue.php
     yesButton.addEventListener('click', () => {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = 'deleteIssue.php';
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'deleteIssue.php';
 
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'id';
-        input.value = ticketId;
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'id';
+    input.value = ticketId;
 
-        form.appendChild(input);
-        document.body.appendChild(form);
+    form.appendChild(input);
+    document.body.appendChild(form);
 
-        form.submit();
+    form.submit();
     });
 
-    // Create the "Nej" button with an onclick event
     const noButton = document.createElement('button');
     noButton.className = 'ticketStyle bottomButton';
     noButton.textContent = 'Nej';
@@ -287,23 +278,18 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
         removeMenu();
     };
 
-    // Append the buttons to the bottom buttons div
     bottomButtons.appendChild(yesButton);
     bottomButtons.appendChild(noButton);
 
-    // Append all elements to the close menu foreground div
     closeMenuFG.appendChild(heading);
     closeMenuFG.appendChild(closeMenuInfo);
     closeMenuFG.appendChild(bottomButtons);
 
-    // Append the close menu foreground div to the close menu div
     closeMenu.appendChild(closeMenuFG);
 
-    // Append the close menu div to the body (or another desired parent element)
     document.body.appendChild(closeMenu);
 }
 
-// Function to remove the close menu from the DOM
 function removeMenu() {
     const closeMenu = document.getElementById('closeMenu');
     if (closeMenu) {
