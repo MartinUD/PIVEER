@@ -1,0 +1,82 @@
+@media (orientation: portrait) {
+    body {
+        background-color:#1e293b; 
+        width: 100vw; 
+        height: 100vh; 
+        display: flex; flex-direction:row; 
+        justify-content: center; 
+        align-items: center;
+    }
+    .loginField{
+        color:white; 
+        border-radius: 3rem; 
+        text-indent: 2.5rem; 
+        outline: none; 
+        font-size: 1rem;
+        background-color:transparent; 
+        border-width: 2px; 
+        border-style:solid; 
+        border-color:#334155; 
+        width: 60vw; 
+        height: 3rem;
+    }
+    .labelStyle{
+        margin-right: auto;
+        color:white;
+    }
+    .buttonStyle{
+        color:white; 
+        width: 20vw;
+        min-width: 5rem; 
+        height: 3rem; 
+        outline: none; 
+        cursor:pointer; 
+        font-size: 1rem; 
+        border-radius: 3rem; 
+        background-color:transparent; 
+        border-width: 2px; 
+        border-style:solid; 
+        border-color:#334155;
+    }
+}
+@media (orientation: landscape) {
+    body {
+        background-color:#1e293b; 
+        width: 100vw; 
+        height: 100vh; 
+        display: flex; flex-direction:row; 
+        justify-content: center; 
+        align-items: center;
+    }
+    .loginField{
+        color:white; 
+        border-radius: 3rem; 
+        text-indent: 2.5rem; 
+        outline: none; 
+        font-size: 1rem;
+        background-color:transparent; 
+        border-width: 2px; 
+        border-style:solid; 
+        border-color:#334155; 
+        width: 30rem; 
+        height: 3rem;
+    }
+    .labelStyle{
+        margin-left: 0.5rem; 
+        margin-right: auto; 
+        color:white;
+    }
+    .buttonStyle{
+        color:white; 
+        width: 10rem; 
+        height: 3rem; 
+        outline: none; 
+        cursor:pointer; 
+        font-size: 1rem; 
+        border-radius: 3rem; 
+        background-color:transparent; 
+        border-width: 2px; 
+        border-style:solid; 
+        border-color:#334155;
+    }
+}

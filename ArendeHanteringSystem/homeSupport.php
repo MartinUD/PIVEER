@@ -12,150 +12,21 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])) {
         <title>Document</title>
         <script src="https://kit.fontawesome.com/e46c856f03.js" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>    </head>
-    <style>
-        *{
-            margin: 0;
-        }
-        .navrow{
-            transition: 0.25s;
-            display: flex;
-            justify-content: left;
-            align-items: center;
-            width: 100%;
-            height: 3rem;
-            border-bottom: 2px solid #2A3A54;
-        }
-        .navrow:hover{
-            background-color: #2A3A54;
-        }
-        .navRowText{
-            margin-left: 0.5rem;
-            font-size: large;
-            color: white;
-            font-weight: 600;
-        }
-        .navRowIcon{
-            margin-left: 0.5rem;
-            color: white;
-        }
-        .tickerHolder{
-            display: flex;
-            flex-direction: column;
-            padding-top: 2rem;
-            padding-right: 5rem;
-            width: 100%;
-            height: 27rem;
-            overflow-y: scroll;
-            overflow-x: hidden;
-        }
-        .ticket{
-            margin-bottom: 2rem;
-            padding-right: 2rem;
-            width: 100%;
-        }
-        .ticketStyle{
-            background-color: transparent;
-            color: white;
-            border-radius: 1rem;
-            border: 2px solid #2A3A54;
-            font-weight: 600;
-            font-size: 1rem;
-            padding: 0.5rem 1rem 0.5rem 1rem;
-        }
-        .ticketTitleAndIss{
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: start;
-        }
-        .ticketTitleAndIss > *{
-            margin-right: 0.5rem;
-        }
-        .ticketDescription{
-            margin-top: 0.5rem;
-            background-color: transparent;
-            border-radius: 1rem;
-            outline: none;
-            font-size: 1rem;
-            color: white;
-            border: 2px solid #2A3A54;
-            height: 3.5rem;
-            text-overflow: ellipsis;
-            white-space: none;
-            padding: 1rem;
-            position: relative;
-            line-height: 18px;
-        }
-        .spanDescription{
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }
-        .ticketButtonsAndDate{
-            margin-top: 0.5rem;
-            width: 100%;   
-            display: flex;
-            flex-direction: row;
-            align-items: end;
-        }
-        .bottomButtons{
-            margin-right: 0.5rem;
-            cursor: pointer;
-        }
-        .closeMenu{
-            top: 0;
-            left: 0;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .closeMenuFG{
-            border-radius: 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 50%;
-            height: 70%;
-            z-index: 5;
-            background-color: #243248;
-        }
-        .bottomButtons{
-            margin-top: auto;
-        }
-        .bottomButton{
-            cursor: pointer;
-            font-size: 2rem;
-            margin: 0.5rem;
-        }
-        .closeMenuInfo{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            margin-top: 1rem;
-        }
-    </style>
+        <link rel="stylesheet" href="home.css">
     <body style="width: 100wh; height:100vh; overflow:hidden; margin: 0; background-color: #1e293b; color:white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
         <div style="display:flex; flex-direction: row;">
-            <aside style="width: 13rem; display:flex; flex-direction: column; height: 100vh; background-color: #243248; display: flex;">
+            <aside class="asideNav">
                 <a class="navrow">
                     <i class="fa-solid fa-clipboard-list navRowIcon"></i>
-                    <h1 class="navRowText">Ärenden</h1>
+                    <h1 class="navRowText showNone">Ärenden</h1>
                 </a>
                 <a class="navrow" href="createIssue.php">
                     <i class="fa-solid fa-plus navRowIcon"></i>
-                    <h1 class="navRowText">Skapa Ärende</h1>
+                    <h1 class="navRowText showNone">Skapa Ärende</h1>
                 </a>
                 <a href="logout.php" style="margin-top:auto; border-top: 2px solid #2A3A54;" class="navrow"> 
                     <i class="fa-solid fa-right-from-bracket navRowIcon"></i>
-                    <h1 class="navRowText">Logga Ut</h1>
+                    <h1 class="navRowText showNone">Logga Ut</h1>
                 </a>
             </aside>
             <div class="issues_dashboard" style="width: 100%; padding-left:2rem; padding-right: 5rem;">
